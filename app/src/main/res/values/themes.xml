@@ -1,11 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.CWgo" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.CWgo" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
     <!--详情页面主题-->
-    <style name="DetailTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="DetailTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#FFF</item>
         <item name="colorPrimaryDark">#FFF</item>

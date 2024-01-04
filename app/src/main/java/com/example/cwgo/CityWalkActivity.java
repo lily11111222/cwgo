@@ -1,14 +1,9 @@
 package com.example.cwgo;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,22 +21,16 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.PolylineOptions;
-import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.geocoder.GeocodeSearch;
 import com.example.cwgo.bean.MyPath;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 
 public class CityWalkActivity extends AppCompatActivity {
 //    private static final String TAG="CityWalkActivity";

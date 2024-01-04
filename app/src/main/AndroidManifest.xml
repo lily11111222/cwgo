@@ -53,8 +53,9 @@
         android:usesCleartextTraffic="true" >
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:screenOrientation="portrait" />
+<!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
+
         <activity
             android:name=".ResultActivity"
             android:exported="false" />
@@ -73,12 +74,44 @@
         <activity
             android:name=".HomeActivity"
             android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:exported="true"
+            android:label="登录">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.MainActivity"
+            android:exported="true"
+            android:label="主页">
+
+        </activity>
+        <activity android:name=".activity.MySettingActivity"
+            android:exported="true"
+            android:label="个人设置">
+        </activity>
+        <activity android:name=".activity.MyMomentActivity"
+            android:exported="true"
+            android:label="我的动态">
+        </activity>
+        <activity android:name=".activity.RegisterActivity"
+            android:exported="true"
+            android:label="注册">
+        </activity>
+        <activity android:name=".activity.RegisterActivity1"
+            android:exported="true"
+            android:label="注册">
+        </activity>
+
 
         <service android:name="com.amap.api.location.APSService" />
     </application>

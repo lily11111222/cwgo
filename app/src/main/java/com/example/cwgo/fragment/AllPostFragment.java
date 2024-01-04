@@ -1,6 +1,5 @@
 package com.example.cwgo.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,17 +17,8 @@ import com.example.cwgo.R;
 import com.example.cwgo.adapter.AllPostAdapter;
 import com.example.cwgo.bean.Post;
 import com.example.cwgo.bean.ReceiveInfo;
-import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class AllPostFragment extends Fragment {
     private static String TAG = "AllPostFragment";
