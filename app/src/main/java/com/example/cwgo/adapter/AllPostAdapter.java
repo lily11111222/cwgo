@@ -76,7 +76,7 @@ public class AllPostAdapter extends BaseAdapter {
             viewHolder = (ViewHolder)view.getTag();
         }
         viewHolder.img_avatar.setImageURL(datas.get(i).getAvatar().replace("localhost", "10.0.2.2"));
-        viewHolder.tv_name.setText(datas.get(i).getUser_name());
+        viewHolder.tv_name.setText(datas.get(i).getUserName());
         viewHolder.tv_time.setText(datas.get(i).getTime());
         viewHolder.tv_content.setText(datas.get(i).getText());
         viewHolder.tv_num_dianzan.setText(Integer.toString(datas.get(i).getHasPraised()));
@@ -96,7 +96,7 @@ public class AllPostAdapter extends BaseAdapter {
 
         Post data = datas.get(i);
         Log.d(TAG, data.toString() + " " +data.getPostImage() +" "+ data.getText() + " "+data.getUserID());
-        String sImage = datas.get(i).getPostImage();
+        String sImage = data.getPostImage();
         String image_item;
         List<String> image_list = new ArrayList<>();
         // String postImage字段，它包括九个图片的图片名，中间用“|”隔开

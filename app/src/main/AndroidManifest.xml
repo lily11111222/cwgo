@@ -37,6 +37,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <application
         android:name=".MapApplication"
         android:allowBackup="true"
@@ -50,14 +51,13 @@
         android:theme="@style/Theme.CWgo"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".activity.MainActivity"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".activity.MyPostActivity"
+            android:exported="false" />
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
-            android:screenOrientation="portrait" />
-<!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
-
+            android:screenOrientation="portrait" /> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
         <activity
             android:name=".ResultActivity"
             android:exported="false" />
@@ -71,9 +71,19 @@
             android:exported="false" /> <!-- 安卓api -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="dff78c882be1f85c8327e594bd0bd783" />
+            android:value="096ed73211d5f1d458a5d2a941c63e42" />
+
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true"
@@ -84,28 +94,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.MainActivity"
             android:exported="true"
-            android:label="主页">
-
-        </activity>
-        <activity android:name=".activity.MySettingActivity"
+            android:label="主页"></activity>
+        <activity
+            android:name=".activity.MySettingActivity"
             android:exported="true"
-            android:label="个人设置">
-        </activity>
-        <activity android:name=".activity.MyMomentActivity"
+            android:label="个人设置"></activity>
+        <activity
+            android:name=".activity.MyMomentActivity"
             android:exported="true"
-            android:label="我的动态">
-        </activity>
-        <activity android:name=".activity.RegisterActivity"
+            android:label="我的动态"></activity>
+        <activity
+            android:name=".activity.RegisterActivity"
             android:exported="true"
-            android:label="注册">
-        </activity>
-        <activity android:name=".activity.RegisterActivity1"
+            android:label="注册"></activity>
+        <activity
+            android:name=".activity.RegisterActivity1"
             android:exported="true"
-            android:label="注册">
-        </activity>
-
+            android:label="注册"></activity>
 
         <service android:name="com.amap.api.location.APSService" />
     </application>

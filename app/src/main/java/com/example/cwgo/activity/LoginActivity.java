@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity{
                         RequestBody body = RequestBody.create(MediaType.parse("application/json"),jsonstr);
                         OkHttpClient client = new OkHttpClient();
                         //url需要填入
-                        Request request = new Request.Builder().url("http://121.43.115.218:8000/auth/login").post(body).build();
+                        Request request = new Request.Builder().url("http://192.168.31.73:8000/auth/login").post(body).build();
                         client.newCall(request).enqueue(new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {

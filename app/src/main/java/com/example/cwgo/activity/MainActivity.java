@@ -16,9 +16,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.cwgo.MyApplication;
 import com.example.cwgo.bean.MyImageView;
+import com.example.cwgo.bean.User;
 import com.example.cwgo.bean.UserData;
 import com.example.cwgo.fragment.HomeFragment;
+import com.example.cwgo.fragment.AllPostFragment;
 import com.example.cwgo.fragment.MyFragment;
 import com.example.cwgo.fragment.MyFragment2;
 import com.example.cwgo.fragment.MyFragment3;
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //Fragment Object
     private HomeFragment walklF;
-    private MyFragment2 channelF;
+    private AllPostFragment channelF;
     private MyFragment3 announceF;
     //private MyFragment4 settingF;
     private FragmentManager fManager;
@@ -50,17 +53,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MyImageView user_image;
     private TextView user_name;
     private TextView user_sign;
-    private UserData mydata;
+    private User mydata;
 
-    public int hostID;//这里用的是id
+    private String hostEmail;//这里用的是id
+    private MyApplication mApp = MyApplication.getInstance();
 
     Handler handlerPra = new Handler(){
         @Override
         public void handleMessage(Message msg){
-            mydata = (UserData) msg.obj;
-
-
-            user_image.setImageURL(" /uploadavatar/"+mydata.getAvatar());
+            mydata = (User) msg.obj;
+            user_image.setImageURL(mydata.getAvatar());
             user_name.setText(mydata.getUserName());
             user_sign.setText(mydata.getSignature());
         }
@@ -72,8 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
         // 从Intent中获取传输的字符串数据，键值对的形式，这里的"STRING_KEY"是之前放入Intent中的键
-        //hostID = Integer.parseInt(intent.getStringExtra("STRING_KEY"));
+        hostEmail = intent.getStringExtra("STRING_KEY");
+        mApp.getUser().setEmail(hostEmail);
 
+        walklF = new HomeFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.ly_content,walklF).commit();
         if(getSupportActionBar()!=null){
             getSupportActionBar().hide();
@@ -102,7 +106,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 try{
                     MyselfUtil rec = new MyselfUtil();
                     //hostID指的是什么？？
-                    mydata = rec.httpGet(hostID);
+                    mydata = rec.httpGet(hostEmail);
+                    mApp.setUser(mydata);
                     handlerPra.sendMessage(handlerPra.obtainMessage(22,mydata));
                 }catch (Exception e){
                     e.printStackTrace();
@@ -133,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId() == R.id.menu_item4){
-                    Intent intent4  = new Intent(MainActivity.this,MyMomentActivity.class);
+                    Intent intent4  = new Intent(MainActivity.this,MyPostActivity.class);
                     startActivity(intent4);
                 } else if (item.getItemId() == R.id.menu_item5) {
                     Intent intent5 = new Intent(MainActivity.this, MySettingActivity.class);
@@ -216,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txt_topbar.setText(R.string.tab_menu_normal);
             txt_channel.setSelected(true);
             if(channelF == null){
-                channelF = new MyFragment2();
+                channelF = new AllPostFragment();
                 fTransaction.add(R.id.ly_content,channelF);
             }else{
                 fTransaction.show(channelF);

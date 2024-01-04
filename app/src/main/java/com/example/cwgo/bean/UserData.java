@@ -2,7 +2,7 @@ package com.example.cwgo.bean;
 
 public class UserData {
 
-    private String avatar;
+    private String avatar="";
     private String code;
     private String email;
     private String password;

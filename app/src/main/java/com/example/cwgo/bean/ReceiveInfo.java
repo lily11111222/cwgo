@@ -27,7 +27,7 @@ public class ReceiveInfo {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()//get
-                .url("http://121.43.115.218:8000/post/selectAllPost")
+                .url("http://192.168.31.73:8000/post/selectAllPost")
                 .build();
         Call call = client.newCall(request);
         try {
@@ -50,7 +50,7 @@ public class ReceiveInfo {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()//get
-                .url("http://192.168.43.121:8080/mycollect?id="+ NAME)
+                .url("http://10.0.2.2:8000/mycollect?id="+ NAME)
                 .build();
         Call call = client.newCall(request);
         try {
@@ -73,7 +73,7 @@ public class ReceiveInfo {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()//get
-                .url("http://192.168.43.121:8080/comment?id="+ NAME)
+                .url("http://10.0.2.2:8080/comment?id="+ NAME)
                 .build();
         Call call = client.newCall(request);
         try {
@@ -97,7 +97,7 @@ public class ReceiveInfo {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()//get
-                .url("http://121.43.115.218:8000/post/selectPostByUser/userName"+ NAME)
+                .url("http://192.168.31.73:8000/post/selectPostByUser/userName"+ NAME)
                 .build();
         Call call = client.newCall(request);
         try {

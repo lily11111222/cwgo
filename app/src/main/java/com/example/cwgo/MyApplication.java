@@ -18,8 +18,9 @@ public class MyApplication {
     }
 
     public User getUser() {
-        User user = new User();
-        user.setUserID(1);
+        if (user == null) {
+            user = new User();
+        }
         return user;
     }
 }

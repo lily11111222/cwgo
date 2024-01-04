@@ -37,7 +37,7 @@
             android:gravity="center" />
     </LinearLayout>
 
-    <ImageView
+    <com.example.cwgo.bean.MyImageView
         android:id="@+id/r_logo"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -54,22 +54,23 @@
         />
 
     <EditText
+        android:id="@+id/setting_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="邮箱"
+        android:enabled="false"/>
+    <EditText
         android:id="@+id/setting_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="60dp"
-
+        android:layout_margin="10dp"
         android:hint="请输入用户名" />
 
-    <EditText
-        android:id="@+id/setting_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-
-        android:hint="ID" />
 
     <EditText
         android:id="@+id/setting_sign"
@@ -79,13 +80,6 @@
 
         android:hint="个人签名" />
 
-    <EditText
-        android:id="@+id/setting_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-
-        android:hint="请输入邮箱" />
 
     <EditText
         android:id="@+id/setting_password"

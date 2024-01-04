@@ -1,7 +1,7 @@
 package com.example.cwgo.bean;
 
 public class ContentInfo {
-    private String avatar;
+    private String avatar="";
     private String Nick;
     private String sign;
 

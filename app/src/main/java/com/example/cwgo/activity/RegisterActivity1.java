@@ -83,7 +83,7 @@ public class RegisterActivity1 extends AppCompatActivity implements View.OnClick
 
             if (!TextUtils.isEmpty(username_str) && !TextUtils.isEmpty(username_str) && !TextUtils.isEmpty(repassword_str)) {
                 if (userpassword_str.equals(repassword_str)) {
-                    HostInfo hostInfo = new HostInfo(username_str,code,hostEmail,userpassword_str,"Hello CWgo！",username_str);
+                    HostInfo hostInfo = new HostInfo("http://192.168.31.73:8000/user/download/1.jpg",code,hostEmail,userpassword_str,"Hello CWgo！",username_str);
                     String jsonstr = new Gson().toJson(hostInfo);
                     System.out.println(jsonstr);
                     //uploadPic(path);
@@ -91,7 +91,7 @@ public class RegisterActivity1 extends AppCompatActivity implements View.OnClick
                     RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonstr);
                     OkHttpClient client = new OkHttpClient();
                     //url需要填
-                    Request request = new Request.Builder().url("http://121.43.115.218:8000/auth/register").post(body).build();
+                    Request request = new Request.Builder().url("http://192.168.31.73:8000/auth/register").post(body).build();
 
                     client.newCall(request).enqueue(new Callback() {
                         @Override

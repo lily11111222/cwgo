@@ -205,7 +205,7 @@ public class NewPostFragment extends Fragment implements IBridgePictureBehavior 
             OkHttpClient client = new OkHttpClient();
             // 先传帖子
             Request request = new Request.Builder()
-                    .url("http://10.0.2.2:8000/post/add")
+                    .url("http://192.168.31.73:8000/post/add")
                     .post(body)
                     .build();
             client.newCall(request).enqueue(new Callback() {
@@ -259,7 +259,7 @@ public class NewPostFragment extends Fragment implements IBridgePictureBehavior 
 //                                .addFormDataPart("ss","",RequestBody.create(MediaType.parse("image/png"),file))
                                 .build();
                         Request request = new Request.Builder()
-                                .url("http://10.0.2.2:8000/post/uploadPostImage")
+                                .url("http://192.168.31.73:8000/post/uploadPostImage")
                                 .post(body)
                                 .build();
                         client.newCall(request).enqueue(new Callback() {

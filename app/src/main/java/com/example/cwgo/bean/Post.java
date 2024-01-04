@@ -9,11 +9,11 @@ public class Post {
     private String title;
     private String road;
 
-    private String avatar;
-    private String user_name;
+    private String avatar="";
+    private String userName;
 
 
-    private String postImage;
+    private String postImage="";
     private int hasPraised = 0;
     private int isCollected = 0;
     private int isPraised = 0;
@@ -26,15 +26,16 @@ public class Post {
         this.avatar = avatar;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPostImage() {
+        if (postImage == null) return "";
         return postImage;
     }
 

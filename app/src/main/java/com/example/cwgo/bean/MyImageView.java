@@ -58,7 +58,7 @@ public class MyImageView extends AppCompatImageView {
             public void run() {
                 try {
                     //把传过来的路径转成URL
-                    URL url = new URL(path);
+                    URL url = new URL(path.contains("localhost")?path.replace("localhost", "192.168.31.73"):path);
                     //获取连接
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     //使用GET方法访问网络

@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="Hello CWgo"
+            android:text="aaa"
             android:textColor="@color/text_white"
             android:textSize="20dp" />
 
@@ -36,7 +36,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="20dp"
-            android:text="aaa"
+            android:text="Hello CWgo"
 
             android:textColor="@color/text_white"
             android:textSize="15dp" />
