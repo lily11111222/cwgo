@@ -37,7 +37,6 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:name=".MapApplication"
         android:allowBackup="true"
@@ -49,8 +48,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CWgo"
-        tools:targetApi="31"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+<!--        <activity-->
+<!--            android:name=".activity.MainActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
@@ -71,7 +73,7 @@
             android:value="dff78c882be1f85c8327e594bd0bd783" />
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

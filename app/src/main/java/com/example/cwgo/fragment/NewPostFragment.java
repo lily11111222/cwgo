@@ -2,6 +2,7 @@ package com.example.cwgo.fragment;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import static com.example.cwgo.util.MapUtil.latLonListToStr;
 import static com.luck.picture.lib.thread.PictureThreadUtils.runOnUiThread;
 
 import android.Manifest;
@@ -43,10 +44,13 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 import com.example.cwgo.DragListener;
 import com.example.cwgo.MyApplication;
 import com.example.cwgo.R;
+import com.example.cwgo.ResultActivity;
 import com.example.cwgo.adapter.GridImageAdapter;
+import com.example.cwgo.bean.MyPath;
 import com.example.cwgo.bean.Post;
 import com.example.cwgo.ninegrid.FullyGridLayoutManager;
 import com.example.cwgo.ninegrid.GlideEngine;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.luck.picture.lib.animators.AnimationType;
 import com.luck.picture.lib.basic.IBridgePictureBehavior;
@@ -152,9 +156,11 @@ public class NewPostFragment extends Fragment implements IBridgePictureBehavior 
      * @return A new instance of fragment NewPostFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NewPostFragment newInstance() {
+    public static NewPostFragment newInstance(MyPath myPath) {
         NewPostFragment fragment = new NewPostFragment();
-
+        Bundle args = new Bundle();
+        args.putParcelable("path", myPath);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -181,6 +187,7 @@ public class NewPostFragment extends Fragment implements IBridgePictureBehavior 
         et_title = view.findViewById(R.id.et_title);
         btn_submit = view.findViewById(R.id.send_btn);
         ib_pos = view.findViewById(R.id.ib_pos);
+
 //        tvDeleteText = view.findViewById(R.id.tv_delete_text);
 
         btn_submit.setOnClickListener(v -> {
@@ -278,8 +285,15 @@ public class NewPostFragment extends Fragment implements IBridgePictureBehavior 
                 }
             });
         });
+        Bundle args = getArguments();
+        // 从 Intent 中获取轨迹点列表
+//        if (args != null) {
+            MyPath receivedPath = args.getParcelable("path");
+//        }
         ib_pos.setOnClickListener(v -> {
             // TODO
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_body,ResultFragment.newInstance(receivedPath)).commit();
+
         });
 
         initWidget();

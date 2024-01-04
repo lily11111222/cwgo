@@ -34,6 +34,7 @@ import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.example.cwgo.bean.MyPath;
+import com.example.cwgo.fragment.NewPostFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -277,7 +278,8 @@ private static final String TAG = "CityWalkActivity";
             @Override
             public void onClick(View v) {
                 mLocationClient.stopLocation();
-                Intent intent=new Intent(CityWalkActivity.this,ResultActivity.class);
+//                Intent intent=new Intent(CityWalkActivity.this,ResultActivity.class);
+                Intent intent=new Intent(CityWalkActivity.this, NewPostFragment.class);
                 intent.putExtra("path", new MyPath(points));
                 startActivity(intent);
             }
