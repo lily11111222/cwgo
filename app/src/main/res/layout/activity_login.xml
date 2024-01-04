@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.LoginActivity">
+    <ImageView
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@mipmap/logo"/>
+    <RelativeLayout
+        android:layout_marginTop="70dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/email"
+            android:lines="1"
+            android:imeOptions="actionNext"
+            android:paddingLeft="20dp"
+            android:gravity="left|center"
+            android:layout_width="350dp"
+            android:layout_height="45dp"
+            android:hint="请输入邮箱"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/password"
+            android:lines="1"
+            android:imeOptions="actionNext"
+            android:paddingLeft="20dp"
+            android:gravity="left|center"
+            android:layout_width="350dp"
+            android:layout_height="45dp"
+            android:hint="请输入密码"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:inputType="textPassword"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="登陆"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/btn_blue"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="60dp"
+            android:gravity="center"
+            android:text="注册"
+            android:backgroundTint="@color/btn_blue"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="150dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="110dp"
+            android:layout_gravity="center"
+            android:text="登录即代表你同意"
+            android:textColor="#89918A"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="《隐私保护协议》"
+            android:textColor="#3934E4"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+</LinearLayout>

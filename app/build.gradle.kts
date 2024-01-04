@@ -96,4 +96,5 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
     implementation("com.google.code.gson:gson:2.8.9")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
 }
