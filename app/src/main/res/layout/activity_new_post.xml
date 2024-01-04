@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F6F8"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/v1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:src="#E4E3E3" />
+
+    <EditText
+        android:id="@+id/content_et"
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:background="#FFFFFF"
+        android:gravity="top"
+        android:hint="记录你的city walk..."
+        android:maxLength="500"
+        android:padding="5dp"
+        android:singleLine="false"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:paddingStart="10dp"
+        android:layout_below="@id/v1" />
+
+    <View
+        android:id="@+id/v2"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:src="#E4E3E3"
+        android:layout_below="@id/content_et" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:overScrollMode="never"
+        android:layout_below="@id/v2" />
+
+    <View
+        android:id="@+id/v3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="#E4E3E3"
+        android:layout_below="@id/recycler" />
+
+    <Button
+        android:id="@+id/send_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/text_yellow"
+        android:gravity="center"
+        android:text="发送"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_below="@id/v3"/>
+    <TextView
+        android:id="@+id/tv_delete_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:alpha="0"
+        android:background="@color/app_color_cc_red"
+        android:drawableTop="@drawable/ic_normal_delete"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/app_drag_delete"
+        android:textColor="@color/app_color_white"
+        android:textSize="12sp"
+        tools:alpha="1" />
+
+</RelativeLayout>
+
