@@ -292,7 +292,7 @@ public class NewPostFragment extends Fragment implements IBridgePictureBehavior 
 //        }
         ib_pos.setOnClickListener(v -> {
             // TODO
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_body,ResultFragment.newInstance(receivedPath)).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ly_content,ResultFragment.newInstance(receivedPath)).commit();
 
         });
 

@@ -122,7 +122,7 @@ public class CityWalkFragment extends Fragment {
 //                Intent intent=new Intent(getActivity(), NewPostFragment.class);
 //                intent.putExtra("path", new MyPath(points));
 //                startActivity(intent);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_body,NewPostFragment.newInstance(new MyPath(points))).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ly_content,NewPostFragment.newInstance(new MyPath(points))).commit();
             }
         });
         aMap.getUiSettings().setZoomControlsEnabled(false);

@@ -73,15 +73,7 @@
             android:name="com.amap.api.v2.apikey"
             android:value="dff78c882be1f85c8327e594bd0bd783" />
 
-        <activity
-            android:name=".activity.MainActivity"
-            android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true"

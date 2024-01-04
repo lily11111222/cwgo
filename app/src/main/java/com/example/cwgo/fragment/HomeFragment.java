@@ -171,7 +171,7 @@ public class HomeFragment extends Fragment implements AMapLocationListener,Locat
             public void onClick(View v) {
 //                Intent intent=new Intent(getActivity(), CityWalkFragment.class);
 //                startActivity(intent);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_body,new CityWalkFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ly_content,new CityWalkFragment()).commit();
             }
         });
 
@@ -594,7 +594,7 @@ public class HomeFragment extends Fragment implements AMapLocationListener,Locat
                         @Override
                         public void onClick(View v) {
                             try{
-                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_body,RouteDetailFragment.newInstance(0,walkPath)).addToBackStack(null).commit();
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ly_content,RouteDetailFragment.newInstance(0,walkPath)).addToBackStack(null).commit();
 
                             }catch (Exception e){
                                 e.printStackTrace();

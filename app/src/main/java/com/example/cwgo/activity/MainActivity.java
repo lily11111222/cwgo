@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cwgo.bean.MyImageView;
 import com.example.cwgo.bean.UserData;
+import com.example.cwgo.fragment.HomeFragment;
 import com.example.cwgo.fragment.MyFragment;
 import com.example.cwgo.fragment.MyFragment2;
 import com.example.cwgo.fragment.MyFragment3;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FrameLayout ly_content;//该页面Fragment的内容？
 
     //Fragment Object
-    private MyFragment walklF;
+    private HomeFragment walklF;
     private MyFragment2 channelF;
     private MyFragment3 announceF;
     //private MyFragment4 settingF;
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 从Intent中获取传输的字符串数据，键值对的形式，这里的"STRING_KEY"是之前放入Intent中的键
         //hostID = Integer.parseInt(intent.getStringExtra("STRING_KEY"));
 
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.ly_content,walklF).commit();
         if(getSupportActionBar()!=null){
             getSupportActionBar().hide();
         }
@@ -205,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txt_topbar.setText(R.string.tab_menu_walk);
             txt_walk.setSelected(true);
             if(walklF == null){
-                walklF = new MyFragment();
+                walklF = new HomeFragment();
                 fTransaction.add(R.id.ly_content,walklF);
             }else{
                 fTransaction.show(walklF);
