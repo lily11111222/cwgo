@@ -98,5 +98,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
+    implementation("com.google.code.gson:gson:2.8.9")
 
 }
