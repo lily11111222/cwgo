@@ -5,11 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.cwgo.R;
 import com.example.cwgo.bean.MyImageView;
@@ -77,8 +75,8 @@ public class AllPostAdapter extends BaseAdapter {
         }else {
             viewHolder = (ViewHolder)view.getTag();
         }
-        viewHolder.img_avatar.setImageURL(datas.get(i).getAvatar());
-        viewHolder.tv_name.setText(datas.get(i).getNickname());
+        viewHolder.img_avatar.setImageURL(datas.get(i).getAvatar().replace("localhost", "10.0.2.2"));
+        viewHolder.tv_name.setText(datas.get(i).getUser_name());
         viewHolder.tv_time.setText(datas.get(i).getTime());
         viewHolder.tv_content.setText(datas.get(i).getText());
         viewHolder.tv_num_dianzan.setText(Integer.toString(datas.get(i).getHasPraised()));

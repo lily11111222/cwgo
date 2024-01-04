@@ -3,14 +3,15 @@ package com.example.cwgo.bean;
 public class Post {
 
     //private Integer postID;
-    private String time;
+    private String postTime;
     private Integer userID;
     private String text;
     private String title;
-    private String location;
+    private String road;
 
     private String avatar;
-    private String nickname;
+    private String user_name;
+
 
     private String postImage;
     private int hasPraised = 0;
@@ -25,12 +26,12 @@ public class Post {
         this.avatar = avatar;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public String getPostImage() {
@@ -89,20 +90,20 @@ public class Post {
         this.title = title;
     }
 
-    public String getLocation() {
-        return location;
+    public String getRoad() {
+        return road;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setRoad(String road) {
+        this.road = road;
     }
 
     public String getTime() {
-        return time;
+        return postTime;
     }
 
     public void setTime(String time) {
-        this.time = time;
+        this.postTime = time;
     }
 
 }

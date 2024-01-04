@@ -93,9 +93,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -193,14 +191,14 @@ public class NewPostFragment extends Fragment implements IBridgePictureBehavior 
 //            post.setTime(DateTime);
             post.setTitle(et_title.getText().toString());
             post.setText(et_content.getText().toString());
-            post.setLocation("..");
+            post.setRoad("..");
             String jsonstr = new Gson().toJson(post);
             System.out.println(jsonstr);
             RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonstr);
             OkHttpClient client = new OkHttpClient();
             // 先传帖子
             Request request = new Request.Builder()
-                    .url("http://121.43.115.218:8000/post/add")
+                    .url("http://10.0.2.2:8000/post/add")
                     .post(body)
                     .build();
             client.newCall(request).enqueue(new Callback() {
@@ -254,7 +252,7 @@ public class NewPostFragment extends Fragment implements IBridgePictureBehavior 
 //                                .addFormDataPart("ss","",RequestBody.create(MediaType.parse("image/png"),file))
                                 .build();
                         Request request = new Request.Builder()
-                                .url("http://121.43.115.218:8000/post/uploadPostImage")
+                                .url("http://10.0.2.2:8000/post/uploadPostImage")
                                 .post(body)
                                 .build();
                         client.newCall(request).enqueue(new Callback() {

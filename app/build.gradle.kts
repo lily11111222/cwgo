@@ -1,6 +1,5 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -46,15 +45,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
-    }
+//    composeOptions {
+//        kotlinCompilerExtensionVersion = "1.4.3"
+//    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -99,5 +95,5 @@ dependencies {
     implementation("com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
     implementation("com.google.code.gson:gson:2.8.9")
-
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 }

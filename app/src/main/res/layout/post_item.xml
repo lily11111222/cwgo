@@ -30,14 +30,28 @@
             android:id="@+id/tv_name"
             android:textSize="20sp"
             android:textColor="#111"
-            android:text="小王"/>
-        <TextView
-            android:layout_width="wrap_content"
+            android:text="小王"
+            android:fontFamily="@font/handwriting"/>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_time"
-            android:textSize="15sp"
-            android:textColor="#666"
-            android:text="2018-8-21"/>
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_time"
+                android:textSize="15sp"
+                android:textColor="#666"
+                android:text="2018-8-21"
+                android:fontFamily="@font/handwriting"/>
+            <ImageButton
+                android:id="@+id/ib_pos"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/position"
+                />
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,13 +60,13 @@
             android:textColor="#444"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="哈哈哈哈或或或或或或或或或或或或或或或或或或或哈哈哈哈哈哈哈"/>
+            android:text="哈哈哈哈或或或或或或或或或或或或或或或或或或或哈哈哈哈哈哈哈"
+            android:fontFamily="@font/handwriting"/>
         <com.example.cwgo.ninegrid.NineGridTestLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/img_image"
             app:sapcing="4dp"/>
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -89,7 +103,8 @@
                 android:textColor="#8a8a8a"
                 android:layout_marginLeft="5dp"
                 android:textSize="17sp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/handwriting"/>
 
         </RelativeLayout>
 
