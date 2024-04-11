@@ -80,7 +80,7 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.11.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
     implementation("com.github.yalantis:ucrop:2.2.8-native")
-    implementation("com.nostra13.universalimageloader:universal-image-loader:1.9.5")
+//    implementation("com.nostra13.universalimageloader:universal-image-loader:1.9.5")
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to  listOf("*.jar"))))
     //导航功能
@@ -96,5 +96,7 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
     implementation("com.google.code.gson:gson:2.8.9")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
-
+//    implementation("com.github.nostra13:Android-Universal-Image-Loader:f6a9615868482672c3630cb7db6dcf43391e80de")
+    implementation("com.github.nostra13:Android-Universal-Image-Loader:458df4da2e")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

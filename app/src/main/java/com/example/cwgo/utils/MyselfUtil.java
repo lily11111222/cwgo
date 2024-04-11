@@ -2,6 +2,7 @@ package com.example.cwgo.utils;
 
 import android.util.Log;
 
+import com.example.cwgo.MyApplication;
 import com.example.cwgo.bean.ContentInfo;
 import com.example.cwgo.bean.User;
 import com.example.cwgo.bean.UserData;
@@ -14,6 +15,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MyselfUtil {
+    private MyApplication mApp = MyApplication.getInstance();
     private String Email;
     private User frid;
     public User httpGet(String hostEmail){
@@ -21,7 +23,7 @@ public class MyselfUtil {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 //需要填入url
-                .url("http://192.168.31.73:8000/user/findUserByEmail?email="+Email)
+                .url("http://"+mApp.getIp()+":8000/user/findUserByEmail?email="+Email)
                 .build();
         Call call = client.newCall(request);
 

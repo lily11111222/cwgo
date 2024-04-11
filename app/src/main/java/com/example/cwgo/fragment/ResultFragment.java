@@ -36,6 +36,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ResultFragment extends Fragment {
+    private androidx.appcompat.widget.Toolbar toolbar;
     private String TAG = "ResultFragment";
     private MapView mapView;
     private List<LatLonPoint> receivedLatLonPointList; // 从 Intent 中获取的轨迹点列表
@@ -93,6 +94,7 @@ public class ResultFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mapView = view.findViewById(R.id.map_view_result);
+        toolbar=view.findViewById(R.id.fake);
         mapView.onCreate(savedInstanceState);// 调用地图所必须重写
         if (aMap == null) {
             aMap = mapView.getMap();
@@ -108,6 +110,13 @@ public class ResultFragment extends Fragment {
                 throw new RuntimeException(e);
             }
         }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            //按顶部回退
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(convertToLatLng(receivedLatLonPointList.get(0)),18));
 
         // 绘制轨迹

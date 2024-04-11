@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -44,6 +45,7 @@
                 android:textSize="15sp"
                 android:textColor="#666"
                 android:text="2018-8-21"
+                android:layout_marginRight="10dp"
                 android:fontFamily="@font/handwriting"/>
             <ImageButton
                 android:id="@+id/ib_pos"
@@ -55,10 +57,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_content"
+            android:id="@+id/tv_title"
             android:textSize="20sp"
             android:textColor="#444"
-            android:layout_marginTop="10dp"
+            android:text="哈哈哈哈"
+            android:fontFamily="@font/handwriting"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_content"
+            android:textSize="18sp"
+            android:textColor="#444"
             android:layout_marginBottom="10dp"
             android:text="哈哈哈哈或或或或或或或或或或或或或或或或或或或哈哈哈哈哈哈哈"
             android:fontFamily="@font/handwriting"/>

@@ -5,8 +5,12 @@ import com.amap.api.services.core.LatLonPoint;
 import com.example.cwgo.R;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapUtil {
@@ -70,8 +74,23 @@ public class MapUtil {
         return objectMapper.writeValueAsString(pointList);
     }
 
-    public static List<LatLonPoint> strToLatLonList(String str){
-        return null;
+    public static List<LatLonPoint> strToLatLonList(String jsonStr){
+        ArrayList<MyLatLon> latLonPointList = convertJsonToList(jsonStr);
+        List<LatLonPoint> rs=new ArrayList<>();
+        for(MyLatLon mll:latLonPointList){
+            rs.add(new LatLonPoint(mll.getLatitude(),mll.getLongitude()));
+        }
+        return rs;
+    }
+    private static ArrayList<MyLatLon> convertJsonToList(String jsonString) {
+        // 创建 Gson 对象
+        Gson gson = new Gson();
+
+        // 创建 Type 对象，用于指定 List<LatLonPoint> 的类型
+        Type listType = new TypeToken<ArrayList<MyLatLon>>(){}.getType();
+
+        // 使用 Gson 的 fromJson 方法将 JSON 字符串转换为 List<LatLonPoint>
+        return gson.fromJson(jsonString, listType);
     }
 
     public static int getWalkActionID(String actionName) {

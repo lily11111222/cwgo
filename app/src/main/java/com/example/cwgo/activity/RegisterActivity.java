@@ -1,5 +1,6 @@
 package com.example.cwgo.activity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -14,7 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cwgo.bean.RegisterEmailResponce;
+import com.example.cwgo.MyApplication;
+import com.example.cwgo.bean.MyUserResponse;
 import com.example.cwgo.R;
 import com.google.gson.Gson;
 
@@ -28,7 +30,6 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity {
     private static String TAG = "RegisterActivity";
@@ -41,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private boolean isTimerRunning = false;
     private final long timerDuration = 30000; // 倒计时时长，单位为毫秒
+    private MyApplication mApp = MyApplication.getInstance();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
                             RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonstr);
                             OkHttpClient client = new OkHttpClient();
                             //url需要填入
-                            Request request = new Request.Builder().url("http://192.168.31.73:8000/auth/sendEmailCode?email=" + hostEmail).get().build();
+                            Request request = new Request.Builder().url("http://"+mApp.getIp()+":8000/auth/sendEmailCode?email=" + hostEmail).get().build();
 
                             client.newCall(request).enqueue(new Callback() {
                                 @Override
@@ -81,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
 
                                 @Override
-                                public void onResponse(Call call, Response response) throws IOException {
+                                public void onResponse(Call call, okhttp3.Response response) throws IOException {
                                     Log.d(TAG, "res1");
                                     Log.d(TAG, String.valueOf(response.code()));
 
@@ -89,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     // 使用 Gson 库解析 JSON 数据
                                     Gson gson = new Gson();
-                                    RegisterEmailResponce responce1 = gson.fromJson(back, RegisterEmailResponce.class);
+                                    MyUserResponse responce1 = gson.fromJson(back, MyUserResponse.class);
 
                                     if(responce1.getMsg().equals("Success")){
                                         Vcode = responce1.getData().substring(13);

@@ -6,7 +6,7 @@
     <string name="app_let_go_drag_delete">松手即可删除</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tab_menu_normal">全部动态</string>
+    <string name="tab_menu_normal">全部帖子</string>
     <string name="tab_menu_message">发布</string>
     <string name="tab_menu_setting">关注</string>
     <string name="tab_menu_walk">周边</string>

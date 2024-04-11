@@ -58,7 +58,6 @@ public class CityWalkFragment extends Fragment {
     List<LatLonPoint> points = new ArrayList<LatLonPoint>();
     private int i=0;
     private Button stopBtn;
-    private Button pauseBtn;
     private AMapLocation startLocation;
     private AMapLocation endLocation;
 
@@ -122,7 +121,8 @@ public class CityWalkFragment extends Fragment {
 //                Intent intent=new Intent(getActivity(), NewPostFragment.class);
 //                intent.putExtra("path", new MyPath(points));
 //                startActivity(intent);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ly_content,NewPostFragment.newInstance(new MyPath(points))).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().hide(CityWalkFragment.this);
+                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fl,NewPostFragment.newInstance(new MyPath(points))).commit();
             }
         });
         aMap.getUiSettings().setZoomControlsEnabled(false);

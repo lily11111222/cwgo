@@ -4,6 +4,7 @@ import android.util.Log;
 import java.net.URLDecoder;
 import java.util.List;
 
+import com.example.cwgo.MyApplication;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -18,16 +19,17 @@ import okhttp3.Response;
 public class ReceiveInfo {
 
 
-    private int NAME;
+    private String NAME;
     List<Post> posts;
     List<Comment> com;
+    private MyApplication mApp = MyApplication.getInstance();
 //    PraiseDetail pra;
     public List<Post> ReiceiveAllPost() {
 
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()//get
-                .url("http://192.168.31.73:8000/post/selectAllPost")
+                .url("http://"+mApp.getIp()+":8000/post/selectAllPost")
                 .build();
         Call call = client.newCall(request);
         try {
@@ -44,60 +46,60 @@ public class ReceiveInfo {
         return posts;
     }
 
-    public List<Post> ReiceiveCollect(int hostID) {
-
-        NAME = hostID;
-
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()//get
-                .url("http://10.0.2.2:8000/mycollect?id="+ NAME)
-                .build();
-        Call call = client.newCall(request);
-        try {
-            Response response = call.execute();
-            String json = response.body().string();
-            Log.v("1234",json);
-            Gson gson = new Gson();
-            posts = gson.fromJson(json, new TypeToken<List<Post>>() {}.getType());
-            for(Post post : posts)
-                Log.v("bbb1",post.toString());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return posts;
-    }
-
-    public List<Comment> ReiceiveComment(int DynamicID) {
-
-        NAME = DynamicID;
-
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()//get
-                .url("http://10.0.2.2:8080/comment?id="+ NAME)
-                .build();
-        Call call = client.newCall(request);
-        try {
-            Response response = call.execute();
-            String json = URLDecoder.decode(response.body().string(),"utf-8");
-            Log.v("aaa",json);
-            Gson gson = new Gson();
-            com = gson.fromJson(json, new TypeToken<List<Comment>>() {}.getType());
-/*            for(Dynamic dy1 : dy)
-                Log.v("bbb",dy1.toString());*/
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return com;
-    }
+//    public List<Post> ReiceiveCollect(int hostID) {
+//
+//        NAME = hostID;
+//
+//        OkHttpClient client = new OkHttpClient();
+//        Request request = new Request.Builder()//get
+//                .url("http://10.0.2.2:8000/mycollect?id="+ NAME)
+//                .build();
+//        Call call = client.newCall(request);
+//        try {
+//            Response response = call.execute();
+//            String json = response.body().string();
+//            Log.v("1234",json);
+//            Gson gson = new Gson();
+//            posts = gson.fromJson(json, new TypeToken<List<Post>>() {}.getType());
+//            for(Post post : posts)
+//                Log.v("bbb1",post.toString());
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return posts;
+//    }
+//
+//    public List<Comment> ReiceiveComment(int DynamicID) {
+//
+//        NAME = DynamicID;
+//
+//        OkHttpClient client = new OkHttpClient();
+//        Request request = new Request.Builder()//get
+//                .url("http://10.0.2.2:8080/comment?id="+ NAME)
+//                .build();
+//        Call call = client.newCall(request);
+//        try {
+//            Response response = call.execute();
+//            String json = URLDecoder.decode(response.body().string(),"utf-8");
+//            Log.v("aaa",json);
+//            Gson gson = new Gson();
+//            com = gson.fromJson(json, new TypeToken<List<Comment>>() {}.getType());
+///*            for(Dynamic dy1 : dy)
+//                Log.v("bbb",dy1.toString());*/
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return com;
+//    }
 
     //看某个人的帖子
-    public List<Post> ReiceiveOnesPost(int userName) {
+    public List<Post> ReiceiveOnesPost(String userName) {
 
         NAME = userName;
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()//get
-                .url("http://192.168.31.73:8000/post/selectPostByUser/userName"+ NAME)
+                .url("http://"+mApp.getIp()+":8000/post/selectPostByUser?userName="+ NAME)
                 .build();
         Call call = client.newCall(request);
         try {

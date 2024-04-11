@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 
 import com.example.cwgo.bean.MyImageView;
+import com.example.cwgo.bean.MyUserResponse;
 import com.example.cwgo.ninegrid.GlideEngine;
 import com.example.cwgo.utils.MyselfUtil;
 import com.google.gson.Gson;
@@ -30,7 +31,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -86,13 +87,12 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class MySettingActivity extends AppCompatActivity  implements IBridgePictureBehavior {
     private final static int ACTIVITY_RESULT = 1;
     private final static int CALLBACK_RESULT = 2;
     private final static int LAUNCHER_RESULT = 3;
-    private ImageView back;
+    private ImageButton back;
     private MyImageView userimage;
     private EditText username, userid, userpassword, email, usersign;
     private Button btn_modify;
@@ -112,17 +112,35 @@ public class MySettingActivity extends AppCompatActivity  implements IBridgePict
     String path="";
     private GridImageAdapter adapter;
 
-    Handler handlerPra = new Handler(){
+    Handler handlerPra = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(Message msg){
-            mydata = (User) msg.obj;
-            email.setText(mydata.getEmail());
-            userimage.setImageURL(mydata.getAvatar());
-            username.setText(mydata.getUserName());
-            usersign.setText(mydata.getSignature());
-            userpassword.setText(mydata.getPassword());
+            if (msg.what == 22) {
+                mydata = (User) msg.obj;
+                email.setText(mydata.getEmail());
+                userimage.setImageURL(mydata.getAvatar());
+                username.setText(mydata.getUserName());
+                usersign.setText(mydata.getSignature());
+                userpassword.setText(mydata.getPassword());
+            } else if (msg.what == 33) {
+                if (msg.obj.toString().equals("Success")){
+                    Toast.makeText(MySettingActivity.this, "头像上传成功！", Toast.LENGTH_SHORT).show();
+                    continuaModi();
+                } else if (msg.obj.toString().equals("Fail")) {
+                    Toast.makeText(MySettingActivity.this, "修改失败：头像上传失败！可能是图片过大哦", Toast.LENGTH_SHORT).show();
+                }
+            } else if (msg.what == 44) {
+                if (msg.obj.toString().equals("Success")){
+                    Toast.makeText(MySettingActivity.this, "用户信息修改成功！", Toast.LENGTH_SHORT).show();
+                    initView();
+                } else if (msg.obj.toString().equals("Fail")) {
+                    Toast.makeText(MySettingActivity.this, "用户信息修改失败！可以重新试试哦", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     };
+
+
     private int resultMode = LAUNCHER_RESULT;
 
 
@@ -138,7 +156,7 @@ public class MySettingActivity extends AppCompatActivity  implements IBridgePict
         userpassword =(EditText) findViewById(R.id.setting_password);
         email =(EditText) findViewById(R.id.setting_email);
         btn_modify =(Button) findViewById(R.id.regist);
-        back = (ImageView) findViewById(R.id.back);
+        back = (ImageButton) findViewById(R.id.back);
         imageEngine = GlideEngine.createGlideEngine();
         launcherResult = createActivityResultLauncher();
         adapter = new GridImageAdapter(MySettingActivity.this, selectList);
@@ -153,13 +171,8 @@ public class MySettingActivity extends AppCompatActivity  implements IBridgePict
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent nextIntent = new Intent(MySettingActivity.this, MainActivity.class);
-                startActivity(nextIntent);
-                finish();
-            }
+        back.setOnClickListener(v -> {
+            finish();
         });
 
         btn_modify.setOnClickListener(new View.OnClickListener() {
@@ -168,30 +181,11 @@ public class MySettingActivity extends AppCompatActivity  implements IBridgePict
                 if (adapter.getData().size() != 0) {
                     String path = adapter.getData().get(0).getAvailablePath();
                     uploadPic(path);
+//                    if (!modiAvaSuc) {
+//                        Toast.makeText(MySettingActivity.this, "上传头像出错！", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    }
                 }
-                ModifyInfo info = new ModifyInfo(username.toString(), email.toString(), usersign.toString());
-                String jsonStr = new Gson().toJson(info);
-                RequestBody body = RequestBody.create(MediaType.parse("application/json"),jsonStr);
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder().url("http://192.168.31.73:8000/user/update").post(body).build();
-                client.newCall(request).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.v("call", "fail");
-                        Toast.makeText(MySettingActivity.this, "出错啦！", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        String back = response.body().string();
-                        if (back.equals("success")) {
-                            Toast.makeText(MySettingActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
-                        }else if(back.equals("fail")){
-                            Toast.makeText(MySettingActivity.this, "出错啦！", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                initView();
             }
         });
 
@@ -212,6 +206,38 @@ public class MySettingActivity extends AppCompatActivity  implements IBridgePict
                 }
             }
         }).start();
+    }
+
+    private void continuaModi() {
+        ModifyInfo info = new ModifyInfo(username.getText().toString(), email.getText().toString(), usersign.getText().toString());
+        String jsonStr = new Gson().toJson(info);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"),jsonStr);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url("http://"+mApp.getIp()+":8000/user/update").post(body).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.v("call", "fail");
+                handlerPra.sendMessage(handlerPra.obtainMessage(44, "Fail"));
+            }
+
+            @Override
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                String back = response.body().string();
+                // 使用 Gson 库解析 JSON 数据
+                Gson gson = new Gson();
+                MyUserResponse responceJson = gson.fromJson(back, MyUserResponse.class);
+                if (responceJson.getCode().equals("200") && responceJson.getMsg().equals("Success")) {
+//                    handler.post(() -> Toast.makeText(MySettingActivity.this,"修改成功！",Toast.LENGTH_SHORT).show());
+                    handlerPra.sendMessage(handlerPra.obtainMessage(44, "Success"));
+                    // 直接下面这样会有问题(多线程
+//                            Toast.makeText(MySettingActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
+                }else {
+//                    Toast.makeText(MySettingActivity.this, "出错啦！", Toast.LENGTH_SHORT).show();
+                    handlerPra.sendMessage(handlerPra.obtainMessage(44, "Fail"));
+                }
+            }
+        });
     }
 
     class ModifyInfo{
@@ -659,9 +685,13 @@ public class MySettingActivity extends AppCompatActivity  implements IBridgePict
 
         if(imagePath != null){
             File file = new File(imagePath);
-            MultipartBody body = new MultipartBody.Builder().addFormDataPart("email", email.toString()).addFormDataPart("file",username+".jpg",RequestBody.create(MediaType.parse("image/jpg"),file)).build();
+            String emailStr = email.getText().toString();
+            MultipartBody body = new MultipartBody.Builder()
+                    .addFormDataPart("email", email.getText().toString())
+                    .addFormDataPart("file",username.getText().toString() +".jpg",
+                            RequestBody.create(MediaType.parse("image/jpg"),file)).build();
             OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder().url("http://192.168.31.73:8000/uploadAvatar").post(body).build();
+            Request request = new Request.Builder().url("http://"+mApp.getIp()+":8000/user/uploadAvatar").post(body).build();
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -669,16 +699,17 @@ public class MySettingActivity extends AppCompatActivity  implements IBridgePict
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String back = response.body().string();
-                    if(back.equals("success")){
-                        Handler handler=new Handler(Looper.getMainLooper());
-                        handler.post(new Runnable(){
-                            public void run(){
-                                Toast.makeText(MySettingActivity.this,"头像上传成功！",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }else if(back.equals("fail")){
+                public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                    if(response.code() == 200){
+//                        Handler handler=new Handler(Looper.getMainLooper());
+//                        handler.post(new Runnable(){
+//                            public void run(){
+//                                Toast.makeText(MySettingActivity.this,"头像上传成功！",Toast.LENGTH_SHORT).show();
+//                                modiAvaSuc = true;
+//                            }
+//                        });
+                        handlerPra.sendMessage(handlerPra.obtainMessage(33, "Success"));
+                    }else {
                         Handler handler=new Handler(Looper.getMainLooper());
                         handler.post(new Runnable(){
                             public void run(){

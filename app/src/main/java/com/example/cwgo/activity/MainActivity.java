@@ -19,12 +19,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.cwgo.MyApplication;
 import com.example.cwgo.bean.MyImageView;
 import com.example.cwgo.bean.User;
-import com.example.cwgo.bean.UserData;
 import com.example.cwgo.fragment.HomeFragment;
 import com.example.cwgo.fragment.AllPostFragment;
-import com.example.cwgo.fragment.MyFragment;
-import com.example.cwgo.fragment.MyFragment2;
-import com.example.cwgo.fragment.MyFragment3;
 import com.example.cwgo.R;
 import com.example.cwgo.utils.MyselfUtil;
 import com.google.android.material.navigation.NavigationView;
@@ -34,14 +30,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView txt_topbar;
     private TextView txt_walk;
     private TextView txt_channel;
-    private TextView txt_postmessage;
     //private TextView txt_setting;
     private FrameLayout ly_content;//该页面Fragment的内容？
 
     //Fragment Object
     private HomeFragment walklF;
     private AllPostFragment channelF;
-    private MyFragment3 announceF;
     //private MyFragment4 settingF;
     private FragmentManager fManager;
 
@@ -88,6 +82,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initView();
 
+    }
+
+    // 侧滑栏头部更新
+    @Override
+    public void onResume() {
+        super.onResume();
+        handlerPra.sendMessage(handlerPra.obtainMessage(22,mApp.getUser()));
     }
 
     //侧滑菜单
@@ -175,21 +176,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txt_topbar = (TextView)findViewById(R.id.txt_topbar);
         txt_walk = (TextView)findViewById(R.id.txt_walk);
         txt_channel = (TextView)findViewById(R.id.txt_channel);
-        txt_postmessage = (TextView)findViewById(R.id.txt_postmessage);
+        ly_content = findViewById(R.id.ly_content);
         //txt_setting = (TextView)findViewById(R.id.txt_setting);
 
         ly_content = (FrameLayout) findViewById(R.id.ly_content);
 
         txt_walk.setOnClickListener(this);
         txt_channel.setOnClickListener(this);
-        txt_postmessage.setOnClickListener(this);
         //txt_setting.setOnClickListener(this);
     }
 
     private void setSelected(){
         txt_walk.setSelected(false);
         txt_channel.setSelected(false);
-        txt_postmessage.setSelected(false);
         //txt_setting.setSelected(false);
     }
 
@@ -197,7 +196,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void hideAllFragment(FragmentTransaction fragmentTransaction){
         if(walklF != null)fragmentTransaction.hide(walklF);
         if(channelF != null)fragmentTransaction.hide(channelF);
-        if(announceF != null)fragmentTransaction.hide(announceF);
         //if(settingF != null)fragmentTransaction.hide(settingF);
     }
 
@@ -225,16 +223,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fTransaction.add(R.id.ly_content,channelF);
             }else{
                 fTransaction.show(channelF);
-            }
-        } else if (view.getId() == R.id.txt_postmessage) {
-            setSelected();
-            txt_topbar.setText(R.string.tab_menu_message);
-            txt_postmessage.setSelected(true);
-            if(announceF == null){
-                announceF = new MyFragment3();
-                fTransaction.add(R.id.ly_content,announceF);
-            }else{
-                fTransaction.show(announceF);
             }
         }
         /*

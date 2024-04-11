@@ -1,10 +1,13 @@
 package com.example.cwgo;
 
+import android.app.Application;
+
 import com.example.cwgo.bean.User;
 
-public class MyApplication {
+public class MyApplication extends Application {
     private User user;
     private static MyApplication mApp;
+    private String ip = "121.43.115.218";
 
     public static MyApplication getInstance() {
         if (mApp == null) {
@@ -22,5 +25,13 @@ public class MyApplication {
             user = new User();
         }
         return user;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }

@@ -9,7 +9,7 @@
         android:layout_height="48dp"
         android:background="@color/btn_blue"
         android:orientation="horizontal">
-        <ImageView
+        <ImageButton
             android:id="@+id/back"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -17,7 +17,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/left"/>
+            android:background="@color/transparent"
+            android:src="@mipmap/left"
+            android:scaleType="fitStart"/>
 
         <TextView
             android:layout_width="0dp"

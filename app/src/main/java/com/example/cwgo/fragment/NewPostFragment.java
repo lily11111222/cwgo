@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,8 +49,10 @@ import com.example.cwgo.ResultActivity;
 import com.example.cwgo.adapter.GridImageAdapter;
 import com.example.cwgo.bean.MyPath;
 import com.example.cwgo.bean.Post;
+import com.example.cwgo.bean.User;
 import com.example.cwgo.ninegrid.FullyGridLayoutManager;
 import com.example.cwgo.ninegrid.GlideEngine;
+import com.example.cwgo.util.MapUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.luck.picture.lib.animators.AnimationType;
@@ -142,11 +145,33 @@ public class NewPostFragment extends Fragment implements IBridgePictureBehavior 
     private Button btn_submit;
     private ImageButton ib_pos;
     private String postID;
+    MyPath receivedPath;
 //    private TextView tvDeleteText;
 
     public NewPostFragment() {
         // Required empty public constructor
     }
+
+    int successCount = 0;
+    int failCount = 0;
+    Handler handlerPra = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg){
+            String mes = (String) msg.obj;
+            if (mes.equals("Success")) {
+//                Toast.makeText(getActivity(),"图片上传成功！",Toast.LENGTH_SHORT).show();
+                successCount ++;
+            } else if (mes.equals("Fail")) {
+//                Toast.makeText(getActivity(),"图片上传失败！",Toast.LENGTH_SHORT).show();
+                failCount++;
+            }
+            if (successCount+failCount == selectList.size()) {
+                Toast.makeText(getActivity(),"贴子发布成功！共上传"+successCount+"张图片",Toast.LENGTH_SHORT).show();
+                getActivity().onBackPressed();
+                getActivity().finish();
+            }
+        }
+    };
 
     /**
      * Use this factory method to create a new instance of
@@ -191,96 +216,124 @@ public class NewPostFragment extends Fragment implements IBridgePictureBehavior 
 //        tvDeleteText = view.findViewById(R.id.tv_delete_text);
 
         btn_submit.setOnClickListener(v -> {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = new Date(System.currentTimeMillis());
-            String DateTime = simpleDateFormat.format(date);
+            // 加图片必须上传的限制！
+//            if (selectList.size() == 0) {
+////                Handler handler = new Handler(Looper.getMainLooper());
+//                handlerPra.post(() -> Toast.makeText(getActivity(),"请选择图片！",Toast.LENGTH_SHORT).show());
+//                return;
+//            }
+            // 添加时间的服务器端做了
+//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            Date date = new Date(System.currentTimeMillis());
+//            String DateTime = simpleDateFormat.format(date);
             post.setUserID(mApp.getUser().getUserID());
 //            post.setTime(DateTime);
             post.setTitle(et_title.getText().toString());
             post.setText(et_content.getText().toString());
-            post.setRoad("..");
+            try {
+                post.setRoad(MapUtil.latLonListToStr(receivedPath.getPath()));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
             String jsonstr = new Gson().toJson(post);
             System.out.println(jsonstr);
             RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonstr);
             OkHttpClient client = new OkHttpClient();
             // 先传帖子
             Request request = new Request.Builder()
-                    .url("http://192.168.31.73:8000/post/add")
+                    .url("http://"+mApp.getIp()+":8000/post/add")
                     .post(body)
                     .build();
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    handler.post(() -> Toast.makeText(getActivity(),"帖子发布失败！",Toast.LENGTH_SHORT).show());
+//                    Handler handler = new Handler(Looper.getMainLooper());
+                    handlerPra.post(() -> Toast.makeText(getActivity(),"帖子发布失败！",Toast.LENGTH_SHORT).show());
                     Log.d(TAG, e.toString());
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d(TAG, "response");
+//                    Log.d(TAG, "response");
                     postID = response.body().string();
-                    Log.d(TAG, postID);
-                    Log.d(TAG, selectList == null?"null":"not null");
-                    Log.d(TAG, selectList.size()==0?"null":"not null");
-                    for(LocalMedia media : selectList) {
-                        OkHttpClient client  = new OkHttpClient();
-                        String path = media.getPath();
-                        String avaPath = media.getAvailablePath();
-                        Log.d(TAG, avaPath);
-                        Log.d(TAG, path);
-//                        File file = new File(avaPath);
-//                        // 构建上传图片附带的参数
-//                        Map<String, Object> reqData = new HashMap<>();
-//                        reqData.put("postID", postID);
-//                        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-//                        MediaType MEDIA_TYPE_PNG = MediaType.parse("multipart/form-data");
-//                        MultipartBody multipartBody = new MultipartBody.Builder()
-//                                .setType(MEDIA_TYPE_PNG)
-//                                .addFormDataPart("postID", reqData.get("postID").toString())
-////                                .addFormDataPart("ts", reqData.get("ts").toString())
-////                                .addFormDataPart("rand", reqData.get("rand").toString())
-////                                .addFormDataPart("platform", reqData.get("platform").toString())
-////                                .addFormDataPart("version", reqData.get("version").toString())
-////                                .addFormDataPart("source", "appimg")
-//                                .addPart(filePart)
-//                                .build();
-//                        Request.Builder requestBuild = new Request.Builder();
-//                        Request request = requestBuild
-//                                .url("http://121.43.115.218:8000/post/uploadPostImage")
-//                                .post(multipartBody)
-//                                .build();
+//                    Log.d(TAG, postID);
+//                    Log.d(TAG, selectList == null?"null":"not null");
+//                    Log.d(TAG, selectList.size()==0?"null":"not null");
+                    // TODO:9张图片然后删除几张会有问题
+                    if (selectList.size() == 0)
+                        handlerPra.post(() -> Toast.makeText(getActivity(),"帖子发布成功！",Toast.LENGTH_SHORT).show());
+                    else
+                        for(int i = 0; i < selectList.size(); i++) {
+                            LocalMedia media = selectList.get(i);
+                            OkHttpClient client  = new OkHttpClient();
+                            String path = media.getPath();
+                            String avaPath = media.getAvailablePath();
+                            Log.d(TAG, avaPath);
+                            Log.d(TAG, path);
+    //                        File file = new File(avaPath);
+    //                        // 构建上传图片附带的参数
+    //                        Map<String, Object> reqData = new HashMap<>();
+    //                        reqData.put("postID", postID);
+    //                        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+    //                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+    //                        MediaType MEDIA_TYPE_PNG = MediaType.parse("multipart/form-data");
+    //                        MultipartBody multipartBody = new MultipartBody.Builder()
+    //                                .setType(MEDIA_TYPE_PNG)
+    //                                .addFormDataPart("postID", reqData.get("postID").toString())
+    ////                                .addFormDataPart("ts", reqData.get("ts").toString())
+    ////                                .addFormDataPart("rand", reqData.get("rand").toString())
+    ////                                .addFormDataPart("platform", reqData.get("platform").toString())
+    ////                                .addFormDataPart("version", reqData.get("version").toString())
+    ////                                .addFormDataPart("source", "appimg")
+    //                                .addPart(filePart)
+    //                                .build();
+    //                        Request.Builder requestBuild = new Request.Builder();
+    //                        Request request = requestBuild
+    //                                .url("http://121.43.115.218:8000/post/uploadPostImage")
+    //                                .post(multipartBody)
+    //                                .build();
 
-                        File file = new File(avaPath);
-                        MultipartBody body = new MultipartBody.Builder()
-                                .addFormDataPart("postID", postID)
-                                .addFormDataPart("file", "img01.png", RequestBody.create(MediaType.parse("image/png"), file))
-//                                .addFormDataPart("ss","",RequestBody.create(MediaType.parse("image/png"),file))
-                                .build();
-                        Request request = new Request.Builder()
-                                .url("http://192.168.31.73:8000/post/uploadPostImage")
-                                .post(body)
-                                .build();
-                        client.newCall(request).enqueue(new Callback() {
-                            @Override
-                            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                                Log.d(TAG, "error "+e);
-                                Handler handler = new Handler(Looper.getMainLooper());
-                                handler.post(() -> Toast.makeText(getActivity(),"图片上传失败！",Toast.LENGTH_SHORT).show());
-                            }
-
-                            @Override
-                            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                                Log.d(TAG, "状态码 "+response.code());
-                                Log.d(TAG, "报错信息 "+response.toString());
-                                if (response.code() == 200){
-                                    Handler handler = new Handler(Looper.getMainLooper());
-                                    handler.post(() -> Toast.makeText(getActivity(),"帖子发布成功！",Toast.LENGTH_SHORT).show());
+                            File file = new File(avaPath);
+                            MultipartBody body = new MultipartBody.Builder()
+                                    .addFormDataPart("postID", postID)
+                                    .addFormDataPart("file", "img01.png", RequestBody.create(MediaType.parse("image/png"), file))
+    //                                .addFormDataPart("ss","",RequestBody.create(MediaType.parse("image/png"),file))
+                                    .build();
+                            Request request = new Request.Builder()
+                                    .url("http://"+mApp.getIp()+":8000/post/uploadPostImage")
+                                    .post(body)
+                                    .build();
+                            client.newCall(request).enqueue(new Callback() {
+                                @Override
+                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                    Log.d(TAG, "error "+e);
+    //                                Handler handler = new Handler(Looper.getMainLooper());
+                                    handlerPra.sendMessage(handlerPra.obtainMessage(1, "Fail"));
                                 }
-                            }
-                        });
-                    }
+
+                                @Override
+                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                    Log.d(TAG, "状态码 "+response.code());
+                                    Log.d(TAG, "报错信息 "+response.toString());
+                                    // 这里不用使用Json
+    //                                String back = response.body().string();
+    //                                // 使用 Gson 库解析 JSON 数据
+    //                                Gson gson = new Gson();
+    //                                com.example.cwgo.bean.Response responceJson = gson.fromJson(back, com.example.cwgo.bean.Response.class);
+    //                                if (responceJson.getCode().equals("200") && responceJson.getMsg().equals("Success")) {
+                                    if (response.code() == 200){
+    //                                    Handler handler = new Handler(Looper.getMainLooper());
+    //                                        Toast.makeText(getActivity(),"图片上传ing！",Toast.LENGTH_SHORT).show();
+                                        handlerPra.sendMessage(handlerPra.obtainMessage(1, "Success"));
+                                    }else {
+    //                                    Handler handler = new Handler(Looper.getMainLooper());
+    //                                        Toast.makeText(getActivity(),"图片上传有问题！！",Toast.LENGTH_SHORT).show();
+                                        handlerPra.sendMessage(handlerPra.obtainMessage(1, "Fail"));
+                                    }
+                                }
+                            });
+
+                        }
 
                 }
             });
@@ -288,12 +341,14 @@ public class NewPostFragment extends Fragment implements IBridgePictureBehavior 
         Bundle args = getArguments();
         // 从 Intent 中获取轨迹点列表
 //        if (args != null) {
-            MyPath receivedPath = args.getParcelable("path");
+        receivedPath = args.getParcelable("path");
 //        }
         ib_pos.setOnClickListener(v -> {
             // TODO
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ly_content,ResultFragment.newInstance(receivedPath)).commit();
-
+//            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ly_content,ResultFragment.newInstance(receivedPath)).addToBackStack(null).commit();
+            Intent intent = new Intent(getActivity(), ResultActivity.class);
+            intent.putExtra("path",receivedPath);
+            startActivity(intent);
         });
 
         initWidget();

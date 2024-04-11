@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".ResultActivity">
     <!--地图-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/fake"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#FFF"
+        app:navigationIcon="@drawable/ic_black_24dp"
+        tools:ignore="MissingConstraints"></androidx.appcompat.widget.Toolbar>
     <com.amap.api.maps.MapView
         android:id="@+id/map_view_result"
         android:layout_width="match_parent"

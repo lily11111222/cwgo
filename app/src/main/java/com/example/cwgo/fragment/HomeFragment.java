@@ -59,6 +59,7 @@ import com.example.cwgo.CityWalkActivity;
 import com.example.cwgo.HomeActivity;
 import com.example.cwgo.R;
 import com.example.cwgo.RouteDetailActivity;
+import com.example.cwgo.activity.NewWalkActivity;
 import com.example.cwgo.bean.MyPath;
 import com.example.cwgo.overlay.WalkRouteOverlay;
 import com.example.cwgo.util.MapUtil;
@@ -171,7 +172,10 @@ public class HomeFragment extends Fragment implements AMapLocationListener,Locat
             public void onClick(View v) {
 //                Intent intent=new Intent(getActivity(), CityWalkFragment.class);
 //                startActivity(intent);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.ly_content,new CityWalkFragment()).commit();
+//                getActivity().getSupportFragmentManager().beginTransaction().hide(HomeFragment.this);
+//                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.ly_content,new CityWalkFragment()).commit();
+                Intent intent = new Intent(getActivity(), NewWalkActivity.class);
+                startActivity(intent);
             }
         });
 

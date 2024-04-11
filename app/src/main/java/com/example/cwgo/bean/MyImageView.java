@@ -10,12 +10,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.example.cwgo.MyApplication;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MyImageView extends AppCompatImageView {
+    private MyApplication mApp = MyApplication.getInstance();
     public static final int GET_DATA_SUCCESS = 1;
     public static final int NETWORK_ERROR = 2;
     public static final int SERVER_ERROR = 3;
@@ -58,7 +61,7 @@ public class MyImageView extends AppCompatImageView {
             public void run() {
                 try {
                     //把传过来的路径转成URL
-                    URL url = new URL(path.contains("localhost")?path.replace("localhost", "192.168.31.73"):path);
+                    URL url = new URL(path.contains("localhost")?path.replace("localhost", mApp.getIp()):path);
                     //获取连接
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     //使用GET方法访问网络

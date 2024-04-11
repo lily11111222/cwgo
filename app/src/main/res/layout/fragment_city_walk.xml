@@ -22,21 +22,15 @@
             android:layout_alignParentBottom="true">
 
             <!-- 第一个按钮，占据线性布局的一半宽度 -->
-            <Button
-                android:id="@+id/pause"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:text="PAUSE"/>
+
 
             <!-- 第二个按钮，同样占据线性布局的一半宽度 -->
             <Button
                 android:id="@+id/stop"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:text="STOP"/>
 
         </LinearLayout>

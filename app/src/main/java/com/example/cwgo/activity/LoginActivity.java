@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cwgo.MyApplication;
 import com.example.cwgo.bean.LoginInput;
 import com.example.cwgo.bean.LoginResponse;
 import com.example.cwgo.R;
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity{
     private Button btnRegister;
     private EditText email, password;
     public static String hostEmail;
+    private MyApplication mApp = MyApplication.getInstance();
 
 
     @Override
@@ -76,7 +78,7 @@ public class LoginActivity extends AppCompatActivity{
                         RequestBody body = RequestBody.create(MediaType.parse("application/json"),jsonstr);
                         OkHttpClient client = new OkHttpClient();
                         //url需要填入
-                        Request request = new Request.Builder().url("http://192.168.31.73:8000/auth/login").post(body).build();
+                        Request request = new Request.Builder().url("http://"+mApp.getIp()+":8000/auth/login").post(body).build();
                         client.newCall(request).enqueue(new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {

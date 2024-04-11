@@ -79,6 +79,7 @@ public class NineGridTestLayout extends NineGridLayout {
     @Override
     protected void onClickImage(int i, String url, List<String> urlList) {
         Toast.makeText(mContext, "点击了图片" + url, Toast.LENGTH_SHORT).show();
+
     }
 }
 

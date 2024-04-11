@@ -26,6 +26,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 
 public class ResultActivity extends AppCompatActivity {
+
     private String TAG="ResultActivity";
     private MapView mapView;
     private List<LatLonPoint> receivedLatLonPointList; // 从 Intent 中获取的轨迹点列表

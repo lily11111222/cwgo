@@ -1,8 +1,10 @@
 package com.example.cwgo.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -29,6 +31,7 @@ public class AllPostFragment extends Fragment {
 
     ListView lv_view;
     List<Post> list_item;
+    SwipeRefreshLayout sl;
     AllPostAdapter adapter = new AllPostAdapter();
     Handler handler = new Handler(Looper.myLooper()) {
         @Override
@@ -127,7 +130,6 @@ public class AllPostFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -135,6 +137,7 @@ public class AllPostFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_post,container,false);
         lv_view = view.findViewById(R.id.lv_allpost);
+        sl = view.findViewById(R.id.swipe_l);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -149,6 +152,36 @@ public class AllPostFragment extends Fragment {
                 }
             }
         }).start();
+
+        // 下拉刷新
+        sl.setColorSchemeColors(
+                Color.parseColor("#ff0000"),
+                Color.parseColor("#00ff00"),
+                Color.parseColor("#0000ff")
+        );
+        sl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                sl.setRefreshing(true);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            ReceiveInfo rec = new ReceiveInfo();//Log.v("1234","1234");
+                            list_item = rec.ReiceiveAllPost();
+                            //Log.v("getinfo",list_item.get(0).toString());
+                            if(!list_item.isEmpty())
+                                handler.sendMessage(handler.obtainMessage(22,list_item));
+                            // 拿到数据两秒后关了刷新
+                            handler.post(() -> sl.setRefreshing(false));
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+            }
+        });
         return view;
     }
 

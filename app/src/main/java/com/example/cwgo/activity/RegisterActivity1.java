@@ -14,8 +14,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cwgo.MyApplication;
 import com.example.cwgo.bean.HostInfo;
-import com.example.cwgo.bean.RegisterResponce;
+import com.example.cwgo.bean.MyResponse;
 import com.example.cwgo.R;
 import com.google.gson.Gson;
 
@@ -39,6 +40,7 @@ public class RegisterActivity1 extends AppCompatActivity implements View.OnClick
     private String code;
     private String hostEmail;
     private CheckBox check;
+    private MyApplication mApp = MyApplication.getInstance();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +85,7 @@ public class RegisterActivity1 extends AppCompatActivity implements View.OnClick
 
             if (!TextUtils.isEmpty(username_str) && !TextUtils.isEmpty(username_str) && !TextUtils.isEmpty(repassword_str)) {
                 if (userpassword_str.equals(repassword_str)) {
-                    HostInfo hostInfo = new HostInfo("http://192.168.31.73:8000/user/download/1.jpg",code,hostEmail,userpassword_str,"Hello CWgo！",username_str);
+                    HostInfo hostInfo = new HostInfo("http://"+mApp.getIp()+":8000/user/download/1.jpg",code,hostEmail,userpassword_str,"Hello CWgo！",username_str);
                     String jsonstr = new Gson().toJson(hostInfo);
                     System.out.println(jsonstr);
                     //uploadPic(path);
@@ -91,7 +93,7 @@ public class RegisterActivity1 extends AppCompatActivity implements View.OnClick
                     RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonstr);
                     OkHttpClient client = new OkHttpClient();
                     //url需要填
-                    Request request = new Request.Builder().url("http://192.168.31.73:8000/auth/register").post(body).build();
+                    Request request = new Request.Builder().url("http://"+mApp.getIp()+":8000/auth/register").post(body).build();
 
                     client.newCall(request).enqueue(new Callback() {
                         @Override
@@ -109,8 +111,8 @@ public class RegisterActivity1 extends AppCompatActivity implements View.OnClick
 
                             // 使用 Gson 库解析 JSON 数据
                             Gson gson = new Gson();
-                            RegisterResponce responce1 = gson.fromJson(back, RegisterResponce.class);
-                            if(responce1.getMsg().equals("Success")){
+                            MyResponse myResponse1 = gson.fromJson(back, MyResponse.class);
+                            if(myResponse1.getMsg().equals("Success")){
 
                                 Handler handler = new Handler(Looper.getMainLooper());
                                 handler.post(new Runnable() {

@@ -128,7 +128,7 @@ public class MyPostActivity extends AppCompatActivity {
             public void run() {
                 try{
                     ReceiveInfo rec = new ReceiveInfo();//Log.v("1234","1234");
-                    list_item = rec.ReiceiveOnesPost(mApp.getUser().getUserID());
+                    list_item = rec.ReiceiveOnesPost(mApp.getUser().getUserName());
                     //Log.v("getinfo",list_item.get(0).toString());
                     if(!list_item.isEmpty())
                         handler.sendMessage(handler.obtainMessage(22,list_item));

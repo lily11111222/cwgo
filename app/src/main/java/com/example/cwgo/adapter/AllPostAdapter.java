@@ -1,17 +1,29 @@
 package com.example.cwgo.adapter;
 
+import static com.example.cwgo.util.MapUtil.strToLatLonList;
+
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.amap.api.services.core.LatLonPoint;
+import com.example.cwgo.MyApplication;
 import com.example.cwgo.R;
+import com.example.cwgo.ResultActivity;
 import com.example.cwgo.bean.MyImageView;
+import com.example.cwgo.bean.MyPath;
 import com.example.cwgo.bean.Post;
+import com.example.cwgo.fragment.ResultFragment;
 import com.example.cwgo.ninegrid.NineGridTestLayout;
 
 import java.util.ArrayList;
@@ -20,6 +32,8 @@ import java.util.List;
 public class AllPostAdapter extends BaseAdapter {
 
     private static String TAG = "AllPostAdapter";
+
+    private MyApplication mApp = MyApplication.getInstance();
 
     private List<Post> datas;
     private LayoutInflater inflater;
@@ -66,20 +80,32 @@ public class AllPostAdapter extends BaseAdapter {
             viewHolder.tv_content = view.findViewById(R.id.tv_content);
             viewHolder.mImageLayout = view.findViewById(R.id.img_image);
             viewHolder.tv_time = view.findViewById(R.id.tv_time);
+            viewHolder.tv_title = view.findViewById(R.id.tv_title);
             viewHolder.img_shoucang = view.findViewById(R.id.img_shoucang);
             viewHolder.img_pinglun = view.findViewById(R.id.img_pinglun);
             viewHolder.img_dianzan = view.findViewById(R.id.img_dianzan);
             viewHolder.tv_num_dianzan = view.findViewById(R.id.tv_num_dianzan);
+            viewHolder.ib_pos = view.findViewById(R.id.ib_pos);
 
             view.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)view.getTag();
         }
-        viewHolder.img_avatar.setImageURL(datas.get(i).getAvatar().replace("localhost", "10.0.2.2"));
+        viewHolder.img_avatar.setImageURL(datas.get(i).getAvatar().replace("localhost", mApp.getIp()));
         viewHolder.tv_name.setText(datas.get(i).getUserName());
         viewHolder.tv_time.setText(datas.get(i).getTime());
+        viewHolder.tv_title.setText(datas.get(i).getTitle());
         viewHolder.tv_content.setText(datas.get(i).getText());
         viewHolder.tv_num_dianzan.setText(Integer.toString(datas.get(i).getHasPraised()));
+
+        viewHolder.ib_pos.setOnClickListener(v -> {
+            String path = datas.get(i).getRoad();
+            List<LatLonPoint> list=strToLatLonList(path);
+//            viewGroup.getSupportFragmentManager().beginTransaction().replace(R.id.ly_content, ResultFragment.newInstance(receivedPath)).addToBackStack(null).commit();
+            Intent intent = new Intent(viewGroup.getContext(), ResultActivity.class);
+            intent.putExtra("path",new MyPath(list));
+            viewGroup.getContext().startActivity(intent);
+        });
 
         viewHolder.mImageLayout.setIsShowAll(false);
         viewHolder.mImageLayout.setSpacing(5);
@@ -108,21 +134,22 @@ public class AllPostAdapter extends BaseAdapter {
                 Log.v(TAG, image_item);
                 p=k+1;
                 // 换成虚拟机可访问的本地服务器的地址
-                image_item = image_item.replace("localhost", "10.0.2.2");
-                image_list.add(image_item);
+//                image_item = image_item.replace("localhost", mApp.getIp());
+                // 如果没有图片就不加他！
+                if (!image_item.equals("") && !image_item.isEmpty()) image_list.add(image_item);
             }
         }
         // 只有一张图的情况和处理最后一张图
         if(image_list.size() == 0){
             Log.v(TAG, sImage);
-            sImage = sImage.replace("localhost", "10.0.2.2");
-            image_list.add(sImage);
+//            sImage = sImage.replace("localhost", mApp.getIp());
+            if (!image_list.equals("") && !image_list.isEmpty()) image_list.add(sImage);
         }
 
         else{
             image_item = sImage.substring(p,sImage.length());
-            image_item = image_item.replace("localhost", "10.0.2.2");
-            image_list.add(image_item);
+//            image_item = image_item.replace("localhost", mApp.getIp());
+            if (!image_item.equals("") && !image_item.isEmpty()) image_list.add(image_item);
             Log.v(TAG,image_item);
         }
         // 一下子处理九张图片
@@ -152,9 +179,10 @@ public class AllPostAdapter extends BaseAdapter {
 
     public static class ViewHolder{
         public MyImageView img_avatar;
-        public TextView tv_name,tv_content,tv_time,tv_num_dianzan;
+        public TextView tv_name,tv_content,tv_time,tv_num_dianzan, tv_title;
         public NineGridTestLayout mImageLayout;
         public ImageView img_shoucang,img_dianzan,img_pinglun;
+        public ImageButton ib_pos;
     }
 
     public interface onItemCollectListener{
